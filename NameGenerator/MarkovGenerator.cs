@@ -100,7 +100,7 @@ namespace NameGenerator
                 seedsLengths[lenName]++;
             }
 
-            
+
             foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, int>>> ch1 in probsOb)
             {
                 foreach (KeyValuePair<string, Dictionary<string, int>> ch2 in probsOb[ch1.Key])
@@ -180,7 +180,7 @@ namespace NameGenerator
                         need1More = false;
                     }
                     prevPrevCh = prevCh;
-                    prevCh = ch;        
+                    prevCh = ch;
                 }
 
                 if (numAttempts < 10)
@@ -245,6 +245,6 @@ namespace NameGenerator
             }
             return res;
         }
-            
+
     }
 }
