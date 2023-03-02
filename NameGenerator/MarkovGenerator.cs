@@ -152,6 +152,7 @@ namespace NameGenerator
 
         public string Generate()
         {
+            string res = "";
             int numAttempts = 0;
             bool mustMakeNextAttempt = true;
             while (mustMakeNextAttempt)
@@ -159,7 +160,7 @@ namespace NameGenerator
                 mustMakeNextAttempt = false;
                 numAttempts++;
 
-                string res = "";
+                res = "";
                 string prevPrevCh = "|";
                 string prevCh = "|";
                 bool need1More = true;
@@ -179,33 +180,32 @@ namespace NameGenerator
                         need1More = false;
                     }
                     prevPrevCh = prevCh;
-                    prevCh = ch;
+                    prevCh = ch;        
+                }
 
-                    if (numAttempts < 10)
+                if (numAttempts < 10)
+                {
+                    if (mustCreateOnlyNewNames)
                     {
-                        if (mustCreateOnlyNewNames)
+                        if (seedsAr.IndexOf(res) != -1)
                         {
-                            if (seedsAr.IndexOf(res) != -1)
+                            mustMakeNextAttempt = true;
+                        }
+                    }
+
+                    if (!mustMakeNextAttempt)
+                    {
+                        if (mustKeepSmapleLength)
+                        {
+                            if ((res.Length < minWordLength) || (res.Length > maxWordLength))
                             {
                                 mustMakeNextAttempt = true;
                             }
                         }
-
-                        if (!mustMakeNextAttempt)
-                        {
-                            if (mustKeepSmapleLength)
-                            {
-                                if ((res.Length < minWordLength) || (res.Length > maxWordLength))
-                                {
-                                    mustMakeNextAttempt = true;
-                                }
-                            }
-                        }
                     }
                 }
-                return res;
             }
-            return "";
+            return res;
         }
 
         public int GetRandomIndexFromWeightedAr(List<int> ar)
@@ -230,7 +230,7 @@ namespace NameGenerator
             }
             if (s > 0)
             {
-                int rnd = rng.Next(s);
+                double rnd = s * rng.NextDouble();
                 int rid = 0;
                 while (rnd >= ar[rid])
                 {
